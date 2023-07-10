@@ -11,12 +11,20 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
+  let!(:task){ FactoryBot.create(:task, title: 'task1')}
+  let!(:second_task){ FactoryBot.create(:second_task, title: 'task2')}
   describe '一覧表示機能' do
+    before do
+      visit tasks_path
+    end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-          FactoryBot.create(:task)
-          visit tasks_path
-          expect(page).to have_content'タイトル１'
+        expect(page).to have_content'task1'
+      end
+    end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        expect([task, second_task]).to contain_exactly(second_task, task)
       end
     end
   end
