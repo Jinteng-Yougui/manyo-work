@@ -36,3 +36,9 @@ Forth table is for tasks' "label", which is the name of this model. It has each 
 | -------- | --------- | 
 | title    | string    | 
 | genre    | string    |
+
+The following is the procedure when you need to deploy on heroku:
+1st, create the URL by typing $ heroku create
+2nd, add 'net-smtp', 'net-imap' and 'net-pop' in the Gemfile and $ bundle install
+3rd, $ git add . and $ git commit -m"message"
+4th, $ git push heroku main
