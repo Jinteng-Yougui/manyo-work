@@ -20,6 +20,10 @@
     <%= form.text_area :content %>
   </div>
 
+  <div class="field">
+    <%= form.label :終了期限 %>
+    <%= form.date_select :deadline, class: 'form-control' %>
+
   <div class="actions">
     <%= form.submit :登録 %>
   </div>

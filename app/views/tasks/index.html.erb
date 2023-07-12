@@ -12,6 +12,7 @@
     <td><%= task.title %></td>
     <td><%= task.content %></td>
     <td><%= l task.created_at, format: :short %></td>
+    <td><%= task.deadline %></td> #この部分が表示されない
     <td><%= link_to '詳細確認', task_path(task.id) %></td>
     <td><%= link_to "編集", edit_task_path(task.id) %></td>
     <td><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></td>
