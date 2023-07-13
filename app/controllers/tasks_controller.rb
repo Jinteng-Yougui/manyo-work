@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
-before_action :set_task, only:%i[ show edit update destroy ]
+before_action :set_task, only:%i[ show edit update destroy priority]
 
   def index
     @tasks = Task.all.order(created_at: :desc)
     @tasks = Task.closest if params[:deadline]
+    @tasks = Task.search_by_title(params[:query]) if params[:query]
   end
 
   def new
@@ -54,7 +55,7 @@ before_action :set_task, only:%i[ show edit update destroy ]
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline)
+    params.require(:task).permit(:title, :content, :deadline, :priority)
   end
 
   def set_task

@@ -1,5 +1,5 @@
 class AddPriorityToTasks < ActiveRecord::Migration[6.1]
   def change
-    t.string "priority", null: false
+    add_column :tasks, :priority, :string
   end
 end
