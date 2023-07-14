@@ -3,8 +3,10 @@ before_action :set_task, only:%i[ show edit update destroy priority]
 
   def index
     @tasks = Task.all.order(created_at: :desc)
-    @tasks = Task.closest if params[:deadline]
-    @tasks = Task.search_by_title(params[:query]) if params[:query]
+    @tasks = @tasks.closest if params[:deadline]
+    @tasks = @tasks.search_by_title(params[:query]) if params[:query]
+    @tasks = @tasks.search_by_priority(params[:priority]) if params[:priority] && params[:priority] != ""
+    @tasks = @tasks.page(params[:page]).per(5)
   end
 
   def new

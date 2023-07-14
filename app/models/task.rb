@@ -6,4 +6,7 @@ class Task < ApplicationRecord
   scope :search_by_title, -> (title){
     where("title like ?", "%#{title}%")
   }
+  scope :search_by_priority, -> (priority){
+    where(priority: priority)
+  }
 end

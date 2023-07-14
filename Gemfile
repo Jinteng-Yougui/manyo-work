@@ -15,6 +15,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.1.0'
+  gem 'pry-rails'
   gem 'factory_bot_rails'
   gem 'rexml'
 end
@@ -38,3 +39,5 @@ gem 'net-pop'
 gem 'rails-i18n'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
+gem 'kaminari'
+gem 'bootstrap4-kaminari-views'
