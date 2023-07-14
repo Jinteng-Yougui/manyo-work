@@ -28,6 +28,12 @@
   <div class="field">
     <%= form.label :ステータス %>
     <%= form.select :priority, [["未着手"],["着手中"],["完了"]], include_blank: "選択してください" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :優先度 %>
+    <%= form.select :importance, [["高"],["中"],["低"]], include_blank: "選択してください" %>
+  </div>
 
   <div class="actions">
     <%= form.submit :登録, class: "btn btn-warning" %>

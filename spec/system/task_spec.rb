@@ -1,11 +1,12 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-  describe '新規作成機能' do
-    context 'タスクを新規作成した場合' do
-      it '作成したタスクが表示される' do
+  describe '新規登録機能' do
+    context 'タスクを新規登録した場合' do
+      it 'ステータスも登録できる' do
         visit new_task_path
         fill_in 'task_title', with: 'Factoryで作ったデフォルトのタイトル１'
         fill_in 'task_content', with: 'Factoryで作ったデフォルトのコンテント１'
+        fill_in 'task_priority' with: '未着手'
         click_button '登録'
         expect(page).to have_content'タスクの登録が完了しました！'
       end
@@ -13,12 +14,12 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
   let!(:task){ FactoryBot.create(:task, title: 'task1')}
   let!(:second_task){ FactoryBot.create(:second_task, title: 'task2')}
-  describe '一覧表示機能' do
+  describe '検索機能' do
     before do
       visit tasks_path
     end
-    context '一覧画面に遷移した場合' do
-      it '作成済みのタスク一覧が表示される' do
+    context 'タイトルを入力した場合' do
+      it 'そのタイトルを含むタスク一覧が表示される' do
         expect(page).to have_content'task1'
       end
     end
