@@ -1,9 +1,13 @@
 class TasksController < ApplicationController
-before_action :set_task, only:%i[ show edit update destroy ]
+before_action :set_task, only:%i[ show edit update destroy]
 
   def index
-    @tasks = Task.all
     @tasks = Task.all.order(created_at: :desc)
+    @tasks = @tasks.closest if params[:deadline]
+    @tasks = @tasks.reorder(importance: :asc) if params[:importance]
+    @tasks = @tasks.search_by_title(params[:query]) if params[:query]
+    @tasks = @tasks.search_by_priority(params[:priority]) if params[:priority] && params[:priority] != ""
+    @tasks = @tasks.page(params[:page]).per(5)
   end
 
   def new
@@ -54,7 +58,7 @@ before_action :set_task, only:%i[ show edit update destroy ]
   private
 
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :deadline, :priority, :importance)
   end
 
   def set_task

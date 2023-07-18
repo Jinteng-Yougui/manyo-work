@@ -1,4 +1,8 @@
 <h1>タスク詳細</h1>
+<p>タスク名: <%= @task.title %></p>
 <p>内容: <%= @task.content %></p>
+<p>終了期限: <%= @task.deadline %></p>
+<p>ステータス: <%= @task.priority %></p>
+<p>優先度: <%= @task.importance %></p>
 
-<%= link_to "タスク一覧に戻る", tasks_path %>
+<%= link_to "一覧に戻る", tasks_path, class: "btn btn-secondary" %>
