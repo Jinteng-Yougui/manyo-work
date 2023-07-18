@@ -1,23 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  describe 'バリデーションのテスト' do
-    context 'タスクのタイトルが空の場合' do
-      it 'バリデーションにひっかる' do
-        task = Task.new(title: '', content: '失敗テスト')
-        expect(task).not_to be_valid
+  describe 'scopeのテスト' do
+    let!(:task){FactoryBot.create(:task, title: 'task1', priority: '未着手')}
+    let!(:second_task){FactoryBot.create(:second_task, title: 'task2', priority: '未着手')}
+    context 'タスクのタイトルを検索欄に入力' do
+      it '検索ができる' do
+        expect(Task.search_by_title('task1').count).to eq 1
       end
     end
-    context 'タスクの詳細が空の場合' do
-      it 'バリデーションにひっかかる' do
-        task = Task.new(title: '失敗テスト', content: '')
-        expect(task).not_to be_valid
+    context 'タスクのステータスを検索欄で選択' do
+      it '検索ができる' do
+        expect(Task.search_by_priority('未着手').count).to eq 2
       end
     end
-    context 'タスクのタイトルと詳細に内容が記載されている場合' do
-      it 'バリデーションが通る' do
-        task = Task.new(title: 'テスト', content: 'テスト')
-        expect(task).to be_valid
+    context 'タスクのタイトルとステータスを検索欄に入力' do
+      it '検索ができる' do
+        expect(Task.search_by_title('task1').search_by_priority('未着手').count).to eq 1
       end
     end
   end

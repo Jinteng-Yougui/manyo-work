@@ -18,13 +18,13 @@ group :development, :test do
   gem 'pry-rails'
   gem 'factory_bot_rails'
   gem 'rexml'
+  gem 'spring'
 end
 
 group :development do
   gem 'web-console', '>= 4.1.0'
   # gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
-  gem 'spring'
 end
 
 group :test do
@@ -40,5 +40,3 @@ gem 'rails-i18n'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'kaminari'
-gem 'bootstrap4-kaminari-views'
-gem "font-awesome-sass"
