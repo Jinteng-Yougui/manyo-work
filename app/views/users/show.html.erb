@@ -1,5 +1,5 @@
-<h2><%= @user.name %>のページ</h2>
+<h2 class="font-weight-bold"><%= @user.name %>のページ</h2>
 
 <p>メールアドレス: <%= @user.email %></p>
 
-<%#= link_to "一覧に戻る", tasks_path, class: "btn btn-secondary" %>
+<%= link_to "タスク一覧に戻る", tasks_path, class: "btn btn-secondary" %>

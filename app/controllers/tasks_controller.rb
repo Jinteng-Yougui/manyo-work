@@ -15,7 +15,7 @@ before_action :set_task, only:%i[ show edit update destroy]
   end
 
   def create
-    @task= Task.new(task_params)
+    @task= current_user.tasks.build(task_params)
 		if params[:back]
       render :new
 	  else
@@ -52,7 +52,8 @@ before_action :set_task, only:%i[ show edit update destroy]
   end
 
   def confirm
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
+    render :new if @task.invalid?
   end
 
   private
