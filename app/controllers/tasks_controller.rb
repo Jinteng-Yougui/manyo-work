@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
 before_action :set_task, only:%i[ show edit update destroy]
+before_action :forbid_login_user, {only: [:top]}
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = current_user.tasks.order(created_at: :desc)
     @tasks = @tasks.closest if params[:deadline]
     @tasks = @tasks.reorder(importance: :asc) if params[:importance]
     @tasks = @tasks.search_by_title(params[:query]) if params[:query]
