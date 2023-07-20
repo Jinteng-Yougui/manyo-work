@@ -49,5 +49,6 @@
 
 <%= link_to "新規タスク登録", new_task_path, class: "btn btn-warning" %>
 <%= link_to "一覧に戻る", tasks_path, class: "btn btn-secondary" %>
+<%= link_to "ログアウト", new_session_path, class: "btn btn-danger" %>
 
 <%= paginate @tasks %>
