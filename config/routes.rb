@@ -7,6 +7,14 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    resources :users
+  end
+  
+  scope module: :user do
+    resources :users
+  end
+
   resources :sessions, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create, :show]
 end
