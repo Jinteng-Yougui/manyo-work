@@ -1,7 +1,11 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   def index
-    @users = User.includes(:tasks)
+    if current_user.admin?
+      redirect_to admin_users_path
+    else
+      @users = User.includes(:tasks)
+    end
   end
 
   def new
