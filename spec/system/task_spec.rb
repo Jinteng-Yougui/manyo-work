@@ -1,20 +1,30 @@
 require 'rails_helper'
-RSpec.describe 'タスク管理機能', type: :system do
+RSpec.describe 'ユーザー登録', type: :system do
   describe '新規登録機能' do
-    context 'タスクを新規登録した場合' do
-      it 'ステータスも登録できる' do
-        visit new_task_path
-        fill_in 'task_title', with: 'Factoryで作ったデフォルトのタイトル１'
-        fill_in 'task_content', with: 'Factoryで作ったデフォルトのコンテント１'
-        select '未着手', from: 'task_priority'
+    context 'ユーザー情報を新規登録に入力した場合' do
+      it '新規登録できる' do
+        visit new_user_path
+        fill_in 'user_name', with: 'User1'
+        fill_in 'user_email', with: 'user1@gmail.com'
+        fill_in 'user_password', with: 'password1'
+        fill_in 'user_password_confirmation', with: 'password1'
         click_button '登録'
-        expect(page).to have_content'タスクの登録が完了しました！'
+        expect(page).to have_content'登録が完了しました！'
+      end
+    end
+    context 'ログインせずタスク一覧に飛ぼうとしたとき' do
+      it 'ログイン画面に遷移する' do
+        visit user_path
+        click_button 'ログアウト'
+        visit root_path
+        expect(page).to have_content'ログイン'
       end
     end
   end
   describe '検索機能' do
-    let!(:task){FactoryBot.create(:task, title: 'task1', priority: '未着手')}
-    let!(:second_task){FactoryBot.create(:second_task, title: 'task2', priority: '未着手')}
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:admin_user) { FactoryBot.create(:admin_user) }
+    let!(:task) { FactoryBot.create(:task, user: user) }
     before do
       visit tasks_path
     end
