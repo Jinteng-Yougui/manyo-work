@@ -14,8 +14,6 @@ RSpec.describe 'ユーザーと管理者に関連する機能', type: :system do
     end
     context 'ログインせずタスク一覧に飛ぼうとしたとき' do
       it 'ログイン画面に遷移する' do
-        visit user_path
-        click_button 'ログアウト'
         visit root_path
         expect(page).to have_content'ログイン'
       end
@@ -30,26 +28,34 @@ RSpec.describe 'ユーザーと管理者に関連する機能', type: :system do
     end
     context 'ログイン画面で必要情報をを入力した場合' do
       it 'ログインして詳細画面を表示できる' do
-        fill_in 'user_email', with: 'user1@gmail.com'
-        fill_in 'user_password', with: 'password1'
+        fill_in 'session_email', with: 'yuki@yuki.com'
+        fill_in 'session_password', with: 'yuki@yuki.com'
         click_button 'ログイン'
-        expect(page).to have_content(user_email)
+        expect(page).to have_content('yuki@yuki.com')
       end
     end
     context '一般ユーザが他人の詳細画面を表示しようとした場合' do
       it 'タスク一覧画面に遷移する' do
-        visit user_path with: 'users/3' 
+        fill_in 'session_email', with: 'iseki@dic.xom'
+        fill_in 'session_password', with: 'iseki@dic.xom'
+        click_button 'ログイン'
+        sleep(1)
+        visit user_path(admin_user)
         expect(page).to have_content('タスク一覧')
       end
     end
     context 'ログアウトする場合' do
       it 'ログアウトできる' do
-        click_button 'ログアウト'
+        fill_in 'session_email', with: 'yuki@yuki.com'
+        fill_in 'session_password', with: 'yuki@yuki.com'
+        click_button 'ログイン'
+        click_link 'ログアウト'
         expect(page).to have_content('ログイン')
       end
     end
   end
   describe '管理者画面' do
+    let!(:user) { FactoryBot.create(:user) }
     let!(:admin_user) { FactoryBot.create(:admin_user) }
     let!(:task) { FactoryBot.create(:task, user: user) }
     before do
@@ -57,37 +63,66 @@ RSpec.describe 'ユーザーと管理者に関連する機能', type: :system do
     end
     context '管理者がログインした場合' do
       it '管理者画面を表示できる' do
+        visit new_session_path
+        fill_in 'session_email', with: 'yuki@yuki.com'
+        fill_in 'session_password', with: 'yuki@yuki.com'
+        click_button 'ログイン'
+        sleep(1)
         visit admin_users_path
-        expect(page).to have_content(登録者一覧)
+        expect(page).to have_content('登録者一覧')
       end
       it 'ユーザの新規登録ができる' do
-        click_button '新規ユーザ登録' 
-        expect(page).to have_content('ユーザ新規登録')
+        fill_in 'session_email', with: 'yuki@yuki.com'
+        fill_in 'session_password', with: 'yuki@yuki.com'
+        click_button 'ログイン'
+        sleep(1)
+        visit admin_users_path
+        click_link '新規ユーザ登録'
+        # 3人目の登録作業
+        fill_in 'user_name', with: 'koba@koba.com'
+        fill_in 'user_email', with: 'koba@koba.com'
+        fill_in 'user_password', with: 'koba@koba.com'
+        fill_in 'user_password_confirmation', with: 'koba@koba.com'
+        click_button '登録'
+        expect(User.count).to eq 3
       end
       it 'ユーザの編集ができる' do
+        fill_in 'session_email', with: 'yuki@yuki.com'
+        fill_in 'session_password', with: 'yuki@yuki.com'
+        click_button 'ログイン'
+        sleep(1)
         visit admin_users_path
-        click_button '編集' 
+        click_button '編集', match: :first
         expect(page).to have_content('ユーザ編集')
       end
       it 'ユーザの削除ができる' do
+        fill_in 'session_email', with: 'yuki@yuki.com'
+        fill_in 'session_password', with: 'yuki@yuki.com'
+        click_button 'ログイン'
+        sleep(1)
         visit admin_users_path
-        click_button '削除' 
+        click_button '削除', match: :first
         expect(page).to have_content('本当に削除しますか')
       end
     end
     context '管理者がユーザの詳細画面にアクセスする場合' do
       it '詳細画面が表示できる' do
-        visit task_path with: 'tasks/3'
+        fill_in 'session_email', with: 'iseki@dic.xom'
+        fill_in 'session_password', with: 'iseki@dic.xom'
+        click_button 'ログイン'
+        sleep(1)
+        visit user_path(admin_user)
         expect(page).to have_content('タスク一覧')
       end
     end
     context '一般ユーザが管理者画面にアクセスする場合' do
       it 'アクセスできない' do
-        click_button 'ログアウト'
-        fill_in 'user_email', with: 'yuki@yuki.com'
-        fill_in 'user_password', with: 'yuki@yuki.com'
-        visit admin/admin_users_path
-        expect(page).to have_content(nil)
+        fill_in 'session_email', with: 'iseki@dic.xom'
+        fill_in 'session_password', with: 'iseki@dic.xom'
+        click_button 'ログイン'
+        sleep(1)
+        visit admin_users_path
+        expect(current_path).to eq (tasks_path)
       end
     end
   end
