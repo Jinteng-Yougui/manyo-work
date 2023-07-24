@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
-  
+
   def index
     if current_user.admin?
       @users = User.includes(:tasks)
@@ -39,5 +39,10 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :email, :password,
+                                 :password_confirmation, :admin)
   end
 end

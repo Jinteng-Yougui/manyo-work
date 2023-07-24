@@ -101,14 +101,16 @@ RSpec.describe 'ユーザーと管理者に関連する機能', type: :system do
         click_button 'ログイン'
         sleep(1)
         visit admin_users_path
-        click_button '削除', match: :first
-        expect(page).to have_content('本当に削除しますか')
+        accept_alert do
+          click_button '削除', match: :first
+        end
+        expect(page).to have_no_content('iseki@dic.xom')
       end
     end
     context '管理者がユーザの詳細画面にアクセスする場合' do
       it '詳細画面が表示できる' do
-        fill_in 'session_email', with: 'iseki@dic.xom'
-        fill_in 'session_password', with: 'iseki@dic.xom'
+        fill_in 'session_email', with: 'yuki@yuki.com'
+        fill_in 'session_password', with: 'yuki@yuki.com'
         click_button 'ログイン'
         sleep(1)
         visit user_path(admin_user)
@@ -122,7 +124,7 @@ RSpec.describe 'ユーザーと管理者に関連する機能', type: :system do
         click_button 'ログイン'
         sleep(1)
         visit admin_users_path
-        expect(current_path).to eq (tasks_path)
+        expect(current_path).to eq (root_path)
       end
     end
   end
