@@ -1,0 +1,23 @@
+<h2 class="font-weight-bold">ラベル一覧</h2>
+<p class="text-center"><%= flash[:notice] %></p>
+
+<table class="table">
+  <thread>
+    <tr>
+      <th>ラベル名</th>
+    </tr>
+  </thread>
+  <tbody>
+    <% @labels.each do|label| %>
+      <tr>
+        <td><%= label.label_name %></td>
+        <td><button type="button" class="btn btn-outline-success"><%= link_to "編集", edit_label_path(label.id) %></button></td>
+        <td><button type="button" class="btn btn-outline-danger"><%= link_to "削除", label_path(label.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></button></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "新規ラベル登録", new_label_path, class: "btn btn-warning" %>
+<%= link_to "一覧に戻る", tasks_path, class: "btn btn-secondary" %>
+<%= link_to "ログアウト", new_session_path, class: "btn btn-danger" %>

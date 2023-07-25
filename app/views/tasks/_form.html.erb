@@ -14,6 +14,7 @@
   <div class="field">
     <%= form.label :タスク名 %>
     <%= form.text_field :title %>
+  </div>
 
   <div class="field">
     <%= form.label :内容 %>
@@ -34,6 +35,11 @@
     <%= form.label :優先度 %>
     <%= form.select :importance, [["高"],["中"],["低"]], include_blank: "選択してください" %>
   </div>
+
+  <% Label.all.each do |label| %>
+    <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+    <%= form.label :label_ids, label.label_name %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit :登録, class: "btn btn-warning" %>

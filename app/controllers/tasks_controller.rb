@@ -60,7 +60,7 @@ before_action :forbid_login_user, {only: [:top]}
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :priority, :importance)
+    params.require(:task).permit(:title, :content, :deadline, :priority, :importance, label_ids:[])
   end
 
   def set_task

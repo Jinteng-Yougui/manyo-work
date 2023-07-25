@@ -18,6 +18,7 @@
     <% if logged_in? %>
       <%= link_to "プロフィール", user_path(current_user.id), class: "btn btn-primary" %>
       <%= link_to "ログアウト", session_path(current_user.id), method: :delete, class: "btn btn-primary" %>
+      <%= link_to "ラベル一覧", labels_path, class: "btn btn-primary" %>
       <% if current_user.admin == true %>
         <%= link_to "管理者画面", admin_users_path, class: "btn btn-primary" %>
       <% end %>

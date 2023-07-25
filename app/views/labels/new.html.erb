@@ -1,0 +1,24 @@
+<%= form_with(model: @label, local: true ) do |form| %>
+  <% if @label.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @label.errors.count %>個のエラーがあります。</h2>
+
+      <ul>
+        <% @label.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :ラベル名 %>
+    <%= form.text_field :label_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit :登録, class: "btn btn-warning" %>
+  </div>
+<% end %>
+
+<%= link_to "一覧に戻る", tasks_path, class: "btn btn-secondary" %>
