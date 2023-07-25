@@ -14,6 +14,16 @@ class LabelsController < ApplicationController
     else
       render :new
     end
+
+    def edit
+      @label = Label.find(params[:id])
+    end
+
+    def destroy
+      @label.destroy
+      flash[:notice] = "削除しました。"
+      redirect_to labels_path
+    end
   end
 
   private

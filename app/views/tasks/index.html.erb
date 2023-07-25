@@ -6,6 +6,8 @@
   <%= form.text_field :query %>
   <%= form.label :query, "ステータスで検索:" %>
   <%= form.select :priority, options_for_select(["", "未着手","着手中","完了"]) %>
+  <%= form.label :query, "ラベルで検索:" %>
+  <%= form.select :label_id, Label.order(:label_name).map { |label| [label.label_name, label.id] } %>
   <%= form.submit "検索", class: "btn btn-secondary" %>
 <% end %>
 
