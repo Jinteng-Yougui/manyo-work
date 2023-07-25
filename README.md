@@ -1,9 +1,9 @@
 # README
 There are four tables for this app.
 
-First table is for "user", which is the name of this model. It has each task's 'title: string', 'content: text', 'deadline: date', 'priority: string', 'status: string' and 'label: string.
+First table is for "tasks", which is the name of this model. It has each task's 'title: string', 'content: text', 'deadline: date', 'priority: string', 'status: string' and 'label: string.
 
-"task"
+"tasks"
 | column   | data type |
 | -------- | --------- | 
 | title    | string    | 
@@ -11,15 +11,15 @@ First table is for "user", which is the name of this model. It has each task's '
 | deadline | date      |
 | priority | string    |
 | status   | string    |
-| label    | string    |
     
-Second table is for tasks' "search", which is the name of this model. It has each task's 'title: string', 'deadline: date' and 'priority: string'.
+Second table is for "users", which is the name of this model. It has each users' 'name: string', 'email: string' and 'password: string'.
 
-"search"
+"users"
 | column   | data type |
 | -------- | --------- | 
-| title    | string    | 
-| deadline | date      |
+| name     | string    | 
+| email    | string    |
+| password | string    |
 
 Third table is for tasks' "sort", which is the name of this model. It has each task's 'deadline: date' and 'priority: string'.
 

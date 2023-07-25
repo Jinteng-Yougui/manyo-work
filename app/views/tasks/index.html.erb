@@ -12,6 +12,7 @@
 <table class="table">
   <thread>
     <tr>
+      <th>作成者</th>
       <th>タイトル</th>
       <th>内容</th>
       <th>
@@ -28,11 +29,12 @@
       </svg>
       <%= link_to "優先度", tasks_path(importance: "true") %>
       </th>
-    </tr>
-  </thread>
+      </tr>
+      </thread>
       <tbody>
       <% @tasks.each do|task| %>
         <tr>
+        <td><%= task.user.name %></td>
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.deadline %></td>
@@ -49,5 +51,6 @@
 
 <%= link_to "新規タスク登録", new_task_path, class: "btn btn-warning" %>
 <%= link_to "一覧に戻る", tasks_path, class: "btn btn-secondary" %>
+<%= link_to "ログアウト", new_session_path, class: "btn btn-danger" %>
 
 <%= paginate @tasks %>

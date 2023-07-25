@@ -1,0 +1,33 @@
+<h2 class="font-weight-bold"><%= @user.name %>のページ</h2>
+
+<p>メールアドレス: <%= @user.email %></p>
+
+<table class="table">
+  <thread>
+    <tr>
+      <th>作成者</th>
+      <th>タイトル</th>
+      <th>内容</th>
+ 
+
+      <tbody>
+      <% @user.tasks.each do|task| %>
+        <tr>
+        <td><%= task.user.name %></td>
+        <td><%= task.title %></td>
+        <td><%= task.content %></td>
+        <td><%= task.deadline %></td>
+        <td><%= task.priority %></td>
+        <td><%= l task.created_at, format: :short %></td>
+        <td><%= task.importance %></td>
+        <td><button type="button" class="btn btn-outline-info"><%= link_to '詳細確認', task_path(task.id) %></button></td>
+        <td><button type="button" class="btn btn-outline-success"><%= link_to "編集", edit_task_path(task.id) %></button></td>
+        <td><button type="button" class="btn btn-outline-danger"><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></button></td>
+      </tr>
+      <% end %>
+      </tbody>
+</table>
+
+
+
+<%= link_to "タスク一覧に戻る", tasks_path, class: "btn btn-secondary" %>
