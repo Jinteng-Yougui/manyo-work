@@ -6,5 +6,5 @@
   User.create(
   name: 'yuki@kondo.com',
   email: 'yuki@kondo.com',
-  password: 'yuki@kondo.com'
+  password: 'yuki@kondo.com',
   admin: 'true')
