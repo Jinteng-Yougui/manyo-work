@@ -5,6 +5,7 @@
 <table class="table">
   <thread>
     <tr>
+      <th>作成者</th>
       <th>タイトル</th>
       <th>内容</th>
  
@@ -12,6 +13,7 @@
       <tbody>
       <% @user.tasks.each do|task| %>
         <tr>
+        <td><%= task.user.name %></td>
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.deadline %></td>
