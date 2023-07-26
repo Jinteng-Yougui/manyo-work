@@ -8,6 +8,7 @@ before_action :forbid_login_user, {only: [:top]}
     @tasks = @tasks.reorder(importance: :asc) if params[:importance]
     @tasks = @tasks.search_by_title(params[:query]) if params[:query]
     @tasks = @tasks.search_by_priority(params[:priority]) if params[:priority] && params[:priority] != ""
+    @tasks = @tasks.joins(:labels).where(labels:{id: params[:label_id]}) if params[:label_id] && params[:label_id] != ""
     @tasks = @tasks.page(params[:page]).per(5)
   end
 
@@ -60,7 +61,7 @@ before_action :forbid_login_user, {only: [:top]}
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :priority, :importance)
+    params.require(:task).permit(:title, :content, :deadline, :priority, :importance, label_ids:[])
   end
 
   def set_task

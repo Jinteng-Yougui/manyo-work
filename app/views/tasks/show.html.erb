@@ -4,5 +4,6 @@
 <p>終了期限: <%= @task.deadline %></p>
 <p>ステータス: <%= @task.priority %></p>
 <p>優先度: <%= @task.importance %></p>
+<p>ラベル: <%= @task.labels.pluck(:label_name).join(",") %></p>
 
 <%= link_to "一覧に戻る", tasks_path, class: "btn btn-secondary" %>

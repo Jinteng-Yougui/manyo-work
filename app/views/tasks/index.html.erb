@@ -6,6 +6,8 @@
   <%= form.text_field :query %>
   <%= form.label :query, "ステータスで検索:" %>
   <%= form.select :priority, options_for_select(["", "未着手","着手中","完了"]) %>
+  <%= form.label :query, "ラベルで検索:" %>
+  <%= form.select :label_id, Label.order(:label_name).map { |label| [label.label_name, label.id] } %>
   <%= form.submit "検索", class: "btn btn-secondary" %>
 <% end %>
 
@@ -29,6 +31,7 @@
       </svg>
       <%= link_to "優先度", tasks_path(importance: "true") %>
       </th>
+      <th>ラベル</th>
       </tr>
       </thread>
       <tbody>
@@ -41,6 +44,7 @@
         <td><%= task.priority %></td>
         <td><%= l task.created_at, format: :short %></td>
         <td><%= task.importance %></td>
+        <td><%= task.labels.pluck(:label_name).join(",") %></td>
         <td><button type="button" class="btn btn-outline-info"><%= link_to '詳細確認', task_path(task.id) %></button></td>
         <td><button type="button" class="btn btn-outline-success"><%= link_to "編集", edit_task_path(task.id) %></button></td>
         <td><button type="button" class="btn btn-outline-danger"><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></button></td>

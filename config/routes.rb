@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
   end
+  resources :labels, only: [:new, :create, :index, :edit, :destroy]
 end
